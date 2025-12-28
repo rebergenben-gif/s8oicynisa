@@ -2,120 +2,172 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Onze Verkoop Website</title>
+    <title>Duo Shop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            margin: 0;
+            background: #f4f4f4;
             color: #333;
         }
-
         header {
-            background-color: #000;
-            color: #fff;
-            padding: 40px 20px;
+            background: #111;
+            color: white;
+            padding: 20px;
             text-align: center;
         }
-
-        section {
+        main {
             max-width: 1000px;
-            margin: auto;
-            padding: 40px 20px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
-
-        .card {
-            background: white;
-            padding: 30px;
-            margin-bottom: 30px;
-            border-radius: 8px;
-        }
-
-        .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        .product-list, .cart-list {
+            display: flex;
+            flex-wrap: wrap;
             gap: 20px;
         }
-
-        .product {
-            border: 1px solid #ddd;
+        .product, .cart-item {
+            background: white;
             padding: 20px;
             border-radius: 8px;
+            flex: 1 1 200px;
             text-align: center;
         }
-
         button {
-            background-color: #28a745;
+            background: #28a745;
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 10px;
         }
-
         button:hover {
-            background-color: #218838;
+            background: #218838;
         }
-
-        footer {
-            background-color: #000;
-            color: white;
-            text-align: center;
-            padding: 20px;
+        #cart {
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Onze Shop</h1>
-    <p>Eerlijke producten, rechtstreeks van ons</p>
+    <h1>Duo Shop</h1>
+    <p>Jij en je vriend kunnen hier samen producten verkopen!</p>
 </header>
 
-<section>
-    <div class="card">
-        <h2>Over ons</h2>
-        <p>
-            Wij zijn <strong>[Jouw naam]</strong> en <strong>[Naam vriend]</strong>.  
-            Wij verkopen alleen producten die we zelf getest hebben en vertrouwen.
-        </p>
-    </div>
+<main>
 
-    <div class="card">
-        <h2>Producten</h2>
+    <!-- Producten toevoegen (door jullie) -->
+    <section class="add-product">
+        <h2>Product toevoegen</h2>
+        <input type="text" id="productName" placeholder="Productnaam">
+        <input type="number" id="productPrice" placeholder="Prijs (€)">
+        <button onclick="addProduct()">Toevoegen</button>
+    </section>
 
-        <div class="products">
-            <div class="product">
-                <h3>Product 1</h3>
-                <p>Korte productbeschrijving.</p>
-                <p><strong>€29,95</strong></p>
-                <button>Bestel</button>
-            </div>
+    <!-- Lijst met producten -->
+    <section class="product-section">
+        <h2>Onze Producten</h2>
+        <div class="product-list" id="productList"></div>
+    </section>
 
-            <div class="product">
-                <h3>Product 2</h3>
-                <p>Korte productbeschrijving.</p>
-                <p><strong>€39,95</strong></p>
-                <button>Bestel</button>
-            </div>
-        </div>
-    </div>
+    <!-- Winkelmandje -->
+    <section id="cart">
+        <h2>Winkelmandje</h2>
+        <div class="cart-list" id="cartList"></div>
+        <h3 id="total">Totaal: €0</h3>
+        <button onclick="checkout()">Afrekenen</button>
+    </section>
 
-    <div class="card">
-        <h2>Waarom bij ons?</h2>
-        <ul>
-            <li>✔ Betrouwbare kwaliteit</li>
-            <li>✔ Snelle levering</li>
-            <li>✔ Goede klantenservice</li>
-        </ul>
-    </div>
-</section>
+</main>
 
-<footer>
-    <p>© 2025 - Gemaakt door [Jouw naam] & [Naam vriend]</p>
-</footer>
+<script>
+let products = [];
+let cart = [];
+
+// Product toevoegen (door jullie beiden)
+function addProduct() {
+    const name = document.getElementById('productName').value;
+    const price = parseFloat(document.getElementById('productPrice').value);
+    if(name && !isNaN(price)) {
+        const product = { name, price };
+        products.push(product);
+        document.getElementById('productName').value = '';
+        document.getElementById('productPrice').value = '';
+        renderProducts();
+    } else {
+        alert('Voer een geldige naam en prijs in');
+    }
+}
+
+// Render producten
+function renderProducts() {
+    const productList = document.getElementById('productList');
+    productList.innerHTML = '';
+    products.forEach((product, index) => {
+        const div = document.createElement('div');
+        div.className = 'product';
+        div.innerHTML = `
+            <h3>${product.name}</h3>
+            <p>€${product.price.toFixed(2)}</p>
+            <button onclick="addToCart(${index})">Voeg toe aan winkelmandje</button>
+        `;
+        productList.appendChild(div);
+    });
+}
+
+// Winkelmandje functies
+function addToCart(index) {
+    const product = products[index];
+    cart.push(product);
+    renderCart();
+}
+
+function renderCart() {
+    const cartList = document.getElementById('cartList');
+    cartList.innerHTML = '';
+    let total = 0;
+    cart.forEach((item, i) => {
+        total += item.price;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+            <h4>${item.name}</h4>
+            <p>€${item.price.toFixed(2)}</p>
+            <button onclick="removeFromCart(${i})">Verwijderen</button>
+        `;
+        cartList.appendChild(div);
+    });
+    document.getElementById('total').innerText = `Totaal: €${total.toFixed(2)}`;
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    renderCart();
+}
+
+// Afrekenen
+function checkout() {
+    if(cart.length === 0) {
+        alert('Je winkelmandje is leeg!');
+        return;
+    }
+    let names = cart.map(p => p.name).join(', ');
+    let total = cart.reduce((sum, p) => sum + p.price, 0);
+    alert(`Bedankt voor je aankoop van: ${names}\nTotaal: €${total.toFixed(2)}`);
+    cart = [];
+    renderCart();
+}
+
+// Voorbeeldproducten
+products.push({name: 'Product 1', price: 29.95});
+products.push({name: 'Product 2', price: 19.95});
+renderProducts();
+</script>
 
 </body>
 </html>
+
