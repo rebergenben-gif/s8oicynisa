@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Onze Verkoop Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #000;
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        section {
+            max-width: 1000px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        footer {
+            background-color: #000;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Onze Shop</h1>
+    <p>Eerlijke producten, rechtstreeks van ons</p>
+</header>
+
+<section>
+    <div class="card">
+        <h2>Over ons</h2>
+        <p>
+            Wij zijn <strong>[Jouw naam]</strong> en <strong>[Naam vriend]</strong>.  
+            Wij verkopen alleen producten die we zelf getest hebben en vertrouwen.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Producten</h2>
+
+        <div class="products">
+            <div class="product">
+                <h3>Product 1</h3>
+                <p>Korte productbeschrijving.</p>
+                <p><strong>€29,95</strong></p>
+                <button>Bestel</button>
+            </div>
+
+            <div class="product">
+                <h3>Product 2</h3>
+                <p>Korte productbeschrijving.</p>
+                <p><strong>€39,95</strong></p>
+                <button>Bestel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Waarom bij ons?</h2>
+        <ul>
+            <li>✔ Betrouwbare kwaliteit</li>
+            <li>✔ Snelle levering</li>
+            <li>✔ Goede klantenservice</li>
+        </ul>
+    </div>
+</section>
+
+<footer>
+    <p>© 2025 - Gemaakt door [Jouw naam] & [Naam vriend]</p>
+</footer>
+
+</body>
+</html>
